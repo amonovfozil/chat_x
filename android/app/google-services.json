@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "955163808516",
+    "project_id": "reliable-plasma-382001",
+    "storage_bucket": "reliable-plasma-382001.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:955163808516:android:9eac7d9afaa354cfddf651",
+        "android_client_info": {
+          "package_name": "com.example.chat_x"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "955163808516-57pjn6oagsj67okocf7df1cemuqec0j8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQAwfAwDx-ybA_uJ0bBUsUw00dzpGA1s0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "955163808516-57pjn6oagsj67okocf7df1cemuqec0j8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
