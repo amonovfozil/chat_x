@@ -32,9 +32,9 @@ class MessageField extends StatelessWidget {
                     print(message);
                     return MesssageBubble(
                       message: message['text'],
-                      // Avatar: message['avatar'],
-                      // userName: message['username'],
-                      // isMe: message['userid'] == currentUser!.uid,
+                      Avatar: message['avatar'],
+                      userName: message['username'],
+                      isMe: message['userid'] == currentUser!.uid,
                       userid: message['userid'],
                     );
                   },

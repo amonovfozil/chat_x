@@ -1,5 +1,5 @@
 import 'package:chat_x/Screens/contac_list_screen.dart';
-import 'package:chat_x/Screens/creat_group.dart';
+import 'package:chat_x/Screens/creatGroup.dart/creat_group.dart';
 import 'package:chat_x/Screens/main_CHatPage_screen.dart';
 import 'package:chat_x/Screens/settings_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -109,8 +109,23 @@ class SideBar extends StatelessWidget {
                             ),
                             SideBarIteams(const ContactList(), Icons.contacts,
                                 'contacts'),
-                            SideBarIteams(const creatGroup(),
-                                Icons.create_new_folder, 'Creat New Group'),
+                            TextButton.icon(
+                              onPressed: () => Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => const creatGroup(),
+                                ),
+                              ),
+                              icon: const Icon(
+                                Icons.create_new_folder,
+                                size: 25,
+                              ),
+                              label: const Text(
+                                'Creat New Group',
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ),
+                            // SideBarIteams(const creatGroup(),
+                            //     Icons.create_new_folder, 'Creat New Group'),
                             SideBarIteams(
                                 SettingsApp(
                                     userdata[0]['AvatarUrl'],

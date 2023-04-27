@@ -9,7 +9,7 @@ class GroupList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('Groups').snapshots(),
+        stream: FirebaseFirestore.instance.collection('groups').snapshots(),
         builder: (context, streamsnapshots) {
           if (streamsnapshots.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -21,18 +21,19 @@ class GroupList extends StatelessWidget {
                     itemCount: streamsnapshots.data!.docs.length,
                     itemBuilder: (context, index) {
                       final groups = streamsnapshots.data!.docs[index];
-
+                      // print(
+                      //   groups['AvatarUrl'],
+                      // );
                       return InkWell(
-                        onTap: !isMainPage
-                            ? () {}
-                            : () =>
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (ctx) => ChatScreen(groups['name']),
-                                )),
+                        onTap: () =>
+                            Navigator.of(context).push(MaterialPageRoute(
+                          builder: (ctx) => ChatScreen(groups['name'],
+                              groups['AvatarUrl'], groups['users'] as List),
+                        )),
                         child: ListTile(
                           leading: CircleAvatar(
                             backgroundImage: NetworkImage(
-                              groups['avatar'],
+                              groups['AvatarUrl'],
                             ),
                             radius: 25,
                           ),
@@ -42,7 +43,7 @@ class GroupList extends StatelessWidget {
                               const SizedBox(height: 15),
                               Text(
                                 groups['name'],
-                                style:  TextStyle(
+                                style: TextStyle(
                                   color:
                                       isMainPage ? Colors.white : Colors.black,
                                 ),

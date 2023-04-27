@@ -42,7 +42,7 @@ class _AuthScreenState extends State<AuthScreen> {
       if (!islogin) {
         final StrogePath = FirebaseStorage.instance
             .ref()
-            .child('UserAvatar')
+            .child('users')
             .child('${userCredential.user!.uid}.jpg');
         if (Avatar != null) {
           await StrogePath.putFile(Avatar);
@@ -57,7 +57,7 @@ class _AuthScreenState extends State<AuthScreen> {
             'password': userData['password']!,
             'username': userData['userName']!,
             'AvatarUrl': Avatar == null
-                ? 'https://firebasestorage.googleapis.com/v0/b/reliable-plasma-382001.appspot.com/o/images.png?alt=media&token=a7059296-1642-4aa3-af86-7578aa0129d0'
+                ? 'https://firebasestorage.googleapis.com/v0/b/reliable-plasma-382001.appspot.com/o/images.png?alt=media&token=dd2a0394-5bd1-42ef-87ec-639ae7c15b53'
                 : getURLAvatar,
           },
         );

@@ -17,6 +17,8 @@ class SettingsApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentUser = FirebaseAuth.instance.currentUser;
+
     final scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
@@ -55,7 +57,11 @@ class SettingsApp extends StatelessWidget {
                       height: 120,
                       child: Row(
                         children: [
-                          AvatarWidgets(avatar: avatar),
+                          AvatarWidgets(
+                            avatar: avatar,
+                            groupname: 'users',
+                            childname: currentUser!.uid,
+                          ),
                           const SizedBox(width: 20),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,16 +100,22 @@ class SettingsApp extends StatelessWidget {
 }
 
 class AvatarWidgets extends StatefulWidget {
-  const AvatarWidgets({Key? key, required this.avatar}) : super(key: key);
+  const AvatarWidgets(
+      {Key? key,
+      required this.avatar,
+      required this.groupname,
+      required this.childname})
+      : super(key: key);
 
   final String avatar;
+  final String groupname;
+  final String childname;
 
   @override
   State<AvatarWidgets> createState() => _AvatarWidgetsState();
 }
 
 class _AvatarWidgetsState extends State<AvatarWidgets> {
-  final currentUser = FirebaseAuth.instance.currentUser;
   File? getimage;
   void changeavatar() async {
     ImagePicker pickedimage = ImagePicker();
@@ -119,13 +131,13 @@ class _AvatarWidgetsState extends State<AvatarWidgets> {
     //firebasestorega yuborish jarayoni
     final StrogePath = FirebaseStorage.instance
         .ref()
-        .child('UserAvatar')
-        .child('${currentUser!.uid}.jpg');
+        .child(widget.groupname)
+        .child('${widget.childname}.jpg');
 
     await StrogePath.putFile(getimage!);
     final getURLAvatar = await StrogePath.getDownloadURL();
     final firestorePath =
-        FirebaseFirestore.instance.collection('users').doc(currentUser!.uid);
+        FirebaseFirestore.instance.collection(widget.groupname).doc(widget.childname);
     await firestorePath.update(
       {
         'AvatarUrl': getURLAvatar,

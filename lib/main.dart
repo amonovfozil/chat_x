@@ -1,5 +1,6 @@
 import 'package:chat_x/Screens/Auth_screen.dart';
 import 'package:chat_x/Screens/main_CHatPage_screen.dart';
+import 'package:chat_x/animations/Page_animations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,10 @@ class MyApp extends StatelessWidget {
       title: 'Chat X',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        pageTransitionsTheme: PageTransitionsTheme(builders: {
+          TargetPlatform.android: pageRoutanimation(),
+          TargetPlatform.iOS: pageRoutanimation(),
+        }),
         primarySwatch: Colors.indigo,
         textTheme: GoogleFonts.latoTextTheme().copyWith(
           subtitle1: GoogleFonts.acme(
