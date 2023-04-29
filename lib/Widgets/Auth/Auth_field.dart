@@ -33,6 +33,18 @@ class _AuthFieldState extends State<AuthField> {
   void submitAuthData() {
     FocusScope.of(context).unfocus();
 
+    if (getImage == null && !isLogin) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Theme.of(context).errorColor,
+          content: const Text(
+            'Please enter Avatar',
+          ),
+        ),
+      );
+      return;
+    }
+
     if (_formkey.currentState!.validate()) {
       _formkey.currentState!.save();
       widget.getAuthData(

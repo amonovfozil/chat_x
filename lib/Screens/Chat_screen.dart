@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
 
-import 'package:chat_x/Widgets/chat/chat_info.dart';
+import 'package:chat_x/Widgets/chat/info_chat/chat_info.dart';
 import 'package:flutter/material.dart';
 
 import '../Widgets/chat/new_message.dart';
@@ -29,6 +29,7 @@ class ChatScreen extends StatelessWidget {
               ),
               const SizedBox(width: 20),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     groupName,
@@ -47,6 +48,7 @@ class ChatScreen extends StatelessWidget {
                   ),
                 ],
               ),
+              const SizedBox(width: 60),
             ],
           ),
         ),

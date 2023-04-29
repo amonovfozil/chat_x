@@ -81,11 +81,11 @@ class MesssageBubble extends StatelessWidget {
                   ),
                 ),
               ),
-              if (isMe)
-                CircleAvatar(
-                  backgroundImage: NetworkImage(Avatar),
-                  radius: 18,
-                ),
+              // if (isMe)
+              //   CircleAvatar(
+              //     backgroundImage: NetworkImage(Avatar),
+              //     radius: 18,
+              //   ),
             ],
           )
         : const Center();

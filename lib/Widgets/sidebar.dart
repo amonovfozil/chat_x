@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:chat_x/Screens/contac_list_screen.dart';
 import 'package:chat_x/Screens/creatGroup.dart/creat_group.dart';
 import 'package:chat_x/Screens/main_CHatPage_screen.dart';
@@ -35,112 +37,124 @@ class SideBar extends StatelessWidget {
     return Drawer(
       child: Scaffold(
         backgroundColor: Colors.indigo,
-        body: StreamBuilder(
-            stream: FirebaseFirestore.instance.collection('users').snapshots(),
-            builder: (context, streamsnapshots) {
-              if (streamsnapshots.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
-              }
-              // if (streamsnapshots.data!.docs == null) {
-              //   return Text('malumot topilmadi');
-              // }
-              final userdata = streamsnapshots.data!.docs
-                  .where((element) => element.id == user!.uid)
-                  .toList();
-              // if (userdata == null) {
-              //   return Container();
-              // }
-              return Column(
-                children: [
-                  const SizedBox(height: 20),
-                  InkWell(
-                    onTap: () => showDialog(
-                      context: context,
-                      builder: (ctx) => Center(
-                        child: SizedBox(
-                          height: 300,
-                          width: double.infinity,
-                          child: Image.network(
-                            userdata[0]['AvatarUrl'],
-                            fit: BoxFit.cover,
+        body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>> != null
+            ? StreamBuilder(
+                stream:
+                    FirebaseFirestore.instance.collection('users').snapshots(),
+                builder: (context,
+                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                        streamsnapshots) {
+                  if (streamsnapshots.connectionState ==
+                      ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  }
+                  // if (streamsnapshots.data!.docs == null) {
+                  //   return Text('malumot topilmadi');
+                  // }
+                  final userdata = streamsnapshots.data!.docs
+                      .where((element) => element.id == user!.uid)
+                      .toList();
+
+                  // if (userdata == null) {
+                  //   return Container();
+                  // }
+                  return Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      InkWell(
+                        onTap: () => showDialog(
+                          context: context,
+                          builder: (ctx) => Center(
+                            child: SizedBox(
+                              height: 300,
+                              width: double.infinity,
+                              child: Image.network(
+                                userdata[0]['AvatarUrl'],
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        userdata[0]['AvatarUrl'],
-                      ),
-                      radius: 70,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    userdata[0]['username'],
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.white),
-                  ),
-                  const SizedBox(height: 20),
-                  Expanded(
-                    child: Container(
-                      width: double.infinity,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(15),
+                        child: CircleAvatar(
+                          backgroundImage: NetworkImage(
+                            userdata[0]['AvatarUrl'],
+                          ),
+                          radius: 70,
                         ),
                       ),
-                      clipBehavior: Clip.hardEdge,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 5),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SideBarIteams(
-                              const MainChatPageScreen(),
-                              Icons.home,
-                              'Bosh Sahifa',
+                      const SizedBox(height: 20),
+                      Text(
+                        userdata[0]['username'],
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.white),
+                      ),
+                      const SizedBox(height: 20),
+                      Expanded(
+                        child: Container(
+                          width: double.infinity,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(15),
                             ),
-                            const Divider(
-                              height: 0,
-                            ),
-                            SideBarIteams(const ContactList(), Icons.contacts,
-                                'contacts'),
-                            TextButton.icon(
-                              onPressed: () => Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => const creatGroup(),
+                          ),
+                          clipBehavior: Clip.hardEdge,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SideBarIteams(
+                                  const MainChatPageScreen(),
+                                  Icons.home,
+                                  'Bosh Sahifa',
                                 ),
-                              ),
-                              icon: const Icon(
-                                Icons.create_new_folder,
-                                size: 25,
-                              ),
-                              label: const Text(
-                                'Creat New Group',
-                                style: TextStyle(fontSize: 16),
-                              ),
+                                const Divider(
+                                  height: 0,
+                                ),
+                                SideBarIteams(
+                                    ContactList(streamsnapshots.data!.docs),
+                                    Icons.contacts,
+                                    'contacts'),
+                                TextButton.icon(
+                                  onPressed: () => Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => creatGroup(
+                                          streamsnapshots.data!.docs),
+                                    ),
+                                  ),
+                                  icon: const Icon(
+                                    Icons.create_new_folder,
+                                    size: 25,
+                                  ),
+                                  label: const Text(
+                                    'Creat New Group',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ),
+                                // SideBarIteams(const creatGroup(),
+                                //     Icons.create_new_folder, 'Creat New Group'),
+                                SideBarIteams(
+                                    SettingsApp(
+                                        userdata[0]['AvatarUrl'],
+                                        userdata[0]['username'],
+                                        userdata[0]['email']),
+                                    Icons.settings,
+                                    'Setting accaunt'),
+                              ],
                             ),
-                            // SideBarIteams(const creatGroup(),
-                            //     Icons.create_new_folder, 'Creat New Group'),
-                            SideBarIteams(
-                                SettingsApp(
-                                    userdata[0]['AvatarUrl'],
-                                    userdata[0]['username'],
-                                    userdata[0]['email']),
-                                Icons.settings,
-                                'Setting accaunt'),
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
-                  )
-                ],
-              );
-            }),
+                      )
+                    ],
+                  );
+                })
+            : const Center(
+                child: Text('data now'),
+              ),
         bottomSheet: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [

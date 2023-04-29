@@ -20,6 +20,7 @@ class _getAvatarImageState extends State<getAvatarImage> {
     ImagePicker pickedimage = ImagePicker();
     XFile? xfile = await pickedimage.pickImage(
       source: ImageSource.gallery,
+      imageQuality: 80,
     );
 
     if (xfile != null) {

@@ -29,7 +29,6 @@ class MessageField extends StatelessWidget {
                   itemCount: streamsnapshot.data!.docs.length,
                   itemBuilder: (context, index) {
                     final message = streamsnapshot.data!.docs[index];
-                    print(message);
                     return MesssageBubble(
                       message: message['text'],
                       Avatar: message['avatar'],

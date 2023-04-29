@@ -47,7 +47,14 @@ class NamedGroup extends StatelessWidget {
           await path.putFile(getImage!);
           final AvatarUrl = await path.getDownloadURL();
           FirebaseFirestore.instance.collection('groups').doc(title!).set(
-            {'name': title, 'AvatarUrl': AvatarUrl, 'users': usersId},
+            {
+              'name': title,
+              'AvatarUrl': AvatarUrl,
+              'users': usersinfo
+                  .map((users) =>
+                      {'avatar': users.url, 'name': users.name, 'id': users.id})
+                  .toList(),
+            },
           );
         } on FirebaseException catch (error) {
           var message = 'texnik xatolik iltimos qaytib urinib ko`ring';
